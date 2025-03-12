@@ -1,17 +1,18 @@
 
 {
-  "name": "email-sender",
+  "name": "salvador-uncheck-tools-sender",
   "version": "1.0.0",
-  "description": "Skrip untuk mengirim email dengan data acak",
+  "description": "Script untuk mengirim email dengan daftar ress dan tampilan interaktif.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "nodemailer": "^6.9.7",
-    "prompt": "^1.3.0",
-    "prompt-sync": "^4.2.0",
-    "randomstring": "^1.2.0"
+    "chalk": "^5.2.0",
+    "cli-progress": "^3.12.0",
+    "nodemailer": "^6.9.5",
+    "randomstring": "^1.3.1",
+    "readline-sync": "^1.4.10"
   },
   "author": "Salvador",
   "license": "MIT"
