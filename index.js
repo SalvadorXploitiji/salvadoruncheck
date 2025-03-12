@@ -1,4 +1,4 @@
-const readline = require('readline');
+const readline = require('readline-sync');
 const nodemailer = require('nodemailer');
 const randomstring = require('randomstring');
 const { namaDepan, namaBelakang } = require('./handler/data.js');
@@ -19,36 +19,36 @@ function validatePassword() {
     let attempts = 3;
 
     while (attempts > 0) {
-        let inputPassword = prompt('Masukkan Password Akses: ');
+        let inputPassword = readline.question('Masukkan Password Akses: ', { hideEchoBack: true });
         if (inputPassword === correctPassword) {
-            console.log('Akses Diberikan!\n');
+            console.log('\n✅ Akses Diberikan!\n');
             return true;
         } else {
             attempts--;
-            console.log(`Password Salah! Sisa Percobaan: ${attempts}`);
+            console.log(`❌ Password Salah! Sisa Percobaan: ${attempts}\n`);
         }
     }
 
-    console.log('Akses Ditolak!');
+    console.log('🚫 Akses Ditolak!');
     process.exit();
 }
 
 // Fungsi untuk memilih jenis ress
 function selectRess() {
-    console.log("\nPilih Ress:");
+    console.log("\n📌 Pilih Ress:");
     console.log("1. Ress Uncheck Facebook");
     console.log("2. Ress Uncheck TikTok");
     console.log("3. Ress Uncheck Moonton");
-    let choice = prompt('Masukkan pilihan (1/2/3): ');
 
-    switch (choice) {
-        case '1': return 'facebook';
-        case '2': return 'tiktok';
-        case '3': return 'moonton';
-        default:
-            console.log('Pilihan tidak valid!');
-            process.exit();
-    }
+    let choice;
+    do {
+        choice = readline.question('Masukkan pilihan (1/2/3): ');
+        if (!["1", "2", "3"].includes(choice)) {
+            console.log("❌ Pilihan tidak valid! Masukkan angka 1, 2, atau 3.");
+        }
+    } while (!["1", "2", "3"].includes(choice));
+
+    return choice === '1' ? 'facebook' : choice === '2' ? 'tiktok' : 'moonton';
 }
 
 // Fungsi untuk mendapatkan nama acak dari data.js
@@ -68,7 +68,7 @@ function generateEmail(name) {
 
 // Fungsi untuk mengirim email
 async function sendEmail(targetEmail, totalRess) {
-    console.log(`Mengirim data ke ${targetEmail}...\n`);
+    console.log(`\n📨 Mengirim ${totalRess} ress ke ${targetEmail}...\n`);
 
     for (let i = 0; i < totalRess; i++) {
         const { email, password } = generateRandomCredentials();
@@ -101,8 +101,12 @@ async function sendEmail(targetEmail, totalRess) {
             html: htmlContent
         };
 
-        await transporter.sendMail(mailOptions);
-        console.log(`✅ Ress ${i + 1} terkirim ke ${targetEmail}`);
+        try {
+            await transporter.sendMail(mailOptions);
+            console.log(`✅ Ress ${i + 1} terkirim ke ${targetEmail}`);
+        } catch (error) {
+            console.error(`❌ Gagal mengirim ress ${i + 1}:`, error.message);
+        }
     }
 
     console.log('\n✅ Semua email berhasil dikirim!');
@@ -111,14 +115,26 @@ async function sendEmail(targetEmail, totalRess) {
 // Eksekusi program
 (async () => {
     validatePassword();
-    let ressType = selectRess();
-    let targetEmail = prompt('Masukkan Alamat Gmail Target: ');
-    let totalRess = parseInt(prompt('Masukkan Total Ress (Max 200): '));
 
-    if (totalRess > 200 || totalRess < 1) {
-        console.log('Jumlah ress tidak valid! Maksimal 200.');
-        process.exit();
-    }
+    let ressType = selectRess();
+
+    // Validasi input email target
+    let targetEmail;
+    do {
+        targetEmail = readline.question('Masukkan Alamat Gmail Target: ');
+        if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(targetEmail)) {
+            console.log("❌ Email tidak valid! Gunakan format yang benar (contoh: example@gmail.com)");
+        }
+    } while (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(targetEmail));
+
+    // Validasi jumlah ress
+    let totalRess;
+    do {
+        totalRess = parseInt(readline.question('Masukkan Total Ress (Max 200): '));
+        if (isNaN(totalRess) || totalRess < 1 || totalRess > 200) {
+            console.log("❌ Jumlah ress tidak valid! Harus antara 1 - 200.");
+        }
+    } while (isNaN(totalRess) || totalRess < 1 || totalRess > 200);
 
     await sendEmail(targetEmail, totalRess);
 })();
