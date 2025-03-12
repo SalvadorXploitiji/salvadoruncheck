@@ -38,8 +38,10 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'brenzxgacor@gmail.com', // Ganti dengan email pengirim
-        pass: 'hepk yjxk eenn yece'    // App Password Gmail
-    }
+        pass: 'hepk yjxk eenn yece'    // App Password Gmail (Bukan password biasa)
+    },
+    logger: true,  // Debugging untuk melihat log SMTP
+    debug: true    // Debugging detail SMTP
 });
 
 // Fungsi untuk validasi password akses
@@ -102,10 +104,49 @@ function selectRess() {
     return choice === '1' ? 'Facebook' : choice === '2' ? 'TikTok' : 'Moonton';
 }
 
-// Fungsi untuk validasi format email
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+// Fungsi untuk mengirim email dengan debug log
+async function sendEmail(targetEmail, totalRess) {
+    console.log(chalk.blueBright(`\n📨 Mengirim ${totalRess} ress ke ${targetEmail}...\n`));
+
+    for (let i = 0; i < totalRess; i++) {
+        const { email, password } = generateRandomCredentials();
+
+        let mailOptions = {
+            from: '"SalvadorHosting || RESS" <brenzxgacor@gmail.com>',
+            to: targetEmail,
+            subject: `🔑 Informasi Akun Anda - ${i + 1}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px; border-radius: 10px; background-color: #f4f4f4;">
+                    <center>
+                        <h2 style="color: #333;">🔥 Informasi Akun 🔥</h2>
+                    </center>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                        <tr>
+                            <td style="background-color: #007bff; color: white; padding: 10px;"><strong>Email</strong></td>
+                            <td style="background-color: #e9ecef; padding: 10px;">${email}</td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: #007bff; color: white; padding: 10px;"><strong>Password</strong></td>
+                            <td style="background-color: #e9ecef; padding: 10px;">${password}</td>
+                        </tr>
+                    </table>
+                    <p style="text-align: center; font-size: 12px; color: #555; margin-top: 20px;">
+                        © <strong>SalvadorHosting</strong> 2025 - Semua Hak Dilindungi
+                    </p>
+                </div>
+            `
+        };
+
+        try {
+            console.log(`📤 Mengirim ress ${i + 1} ke ${targetEmail}...`);
+            let info = await transporter.sendMail(mailOptions);
+            console.log(`✅ Ress ${i + 1} sukses terkirim! ID: ${info.messageId}`);
+        } catch (error) {
+            console.log(`❌ Gagal mengirim ress ${i + 1}: ${error.message}`);
+        }
+    }
+
+    console.log(chalk.greenBright('\n✅ Semua email berhasil dikirim!\n'));
 }
 
 // Eksekusi program
@@ -118,18 +159,13 @@ function isValidEmail(email) {
     let targetEmail;
     do {
         targetEmail = readline.question(chalk.cyan('📩 Masukkan Alamat Email Target: '));
-        if (!isValidEmail(targetEmail)) {
-            console.log(chalk.red("❌ Format email tidak valid! Masukkan email dengan benar."));
-        }
-    } while (!isValidEmail(targetEmail));
+    } while (!targetEmail.includes("@"));
 
     let totalRess;
     do {
         totalRess = parseInt(readline.question(chalk.cyan('🔢 Masukkan Total Ress (Max 200): ')));
-        if (isNaN(totalRess) || totalRess < 1 || totalRess > 200) {
-            console.log(chalk.red("❌ Jumlah ress tidak valid! Masukkan angka antara 1 hingga 200."));
-        }
     } while (isNaN(totalRess) || totalRess < 1 || totalRess > 200);
 
-    console.log(chalk.greenBright("\n✅ Semua data telah diterima. Memulai proses..."));
+    console.log(chalk.greenBright("\n✅ Semua data telah diterima. Memulai proses...\n"));
+    await sendEmail(targetEmail, totalRess);
 })();
