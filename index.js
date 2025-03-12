@@ -1,60 +1,124 @@
-(function () {
-    const _0x4a3b = [
-        'require', 'prompt-sync', 'nodemailer', 'randomstring',
-        './handler/data.js', './handler/generatePassword.js',
-        'createTransport', 'gmail', 'auth',
-        'brenzxgacor@gmail.com', 'hepk yjxk eenn yec', 'service',
-        'password', 'log', 'AKSES_GRANTED', 'logFail',
-        'logSuccess', 'readline', 'readFailure', 'obfartfunction', 'eval',
-        'process', 'sendMail'
-    ];
+constconst prompt = require('prompt-sync')();
+const nodemailer = require('nodemailer');
+const randomstring = require('randomstring');
+const { namaDepan, namaBelakang } = require('./handler/data.js');
+const generateRandomCredentials = require("./handler/generatePassword.js");
 
-    function _0x123a(_0x11c3) {
-        return _0x4a3b[_0x11c3];
+// Konfigurasi akun Gmail pengirim
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'brenzxgacor@gmail.com', // Ganti dengan email pengirim
+        pass: 'hepk yjxk eenn yece'    // App Password Gmail
     }
+});
 
-    const _0x59c3 = require; // Menggunakan require langsung tanpa eval
-    const _0x842b = _0x59c3(_0x123a(1)); // prompt-sync
-    const _0x29d1 = _0x59c3(_0x123a(2)); // nodemailer
-    const _0x49fa = _0x59c3(_0x123a(3)); // randomstring
-    const { namaDepan, namaBelakang } = _0x59c3(_0x123a(4)); // data.js
-    const _0x74f2 = _0x59c3(_0x123a(5)); // generatePassword.js
+// Fungsi untuk validasi password akses
+function validatePassword() {
+    const correctPassword = 'salvador123@'; // Ganti dengan password akses
+    let attempts = 3;
 
-    const _0x6789 = _0x29d1[_0x123a(6)]({
-        [_0x123a(11)]: _0x123a(7),
-        [_0x123a(8)]: {
-            user: _0x123a(9),
-            pass: _0x123a(10),
-        },
-    });
-
-    function _0x512f() {
-        const _0x1a3d = _0x123a(12);
-        let _0x2e79 = 3;
-        while (_0x2e79 > 0) {
-            let _0x35a1 = _0x842b(_0x123a(14))();
-            if (_0x35a1 === _0x1a3d) {
-                console[_0x123a(13)](_0x123a(15));
-                return true;
-            } else {
-                _0x2e79--;
-                console[_0x123a(13)](_0x2e79);
-            }
+    while (attempts > 0) {
+        let inputPassword = prompt('Masukkan Password Akses: ');
+        if (inputPassword === correctPassword) {
+            console.log('Akses Diberikan!\n');
+            return true;
+        } else {
+            attempts--;
+            console.log(`Password Salah! Sisa Percobaan: ${attempts}`);
         }
-        console[_0x123a(13)](_0x123a(16));
-        process.exit(); // Menghentikan eksekusi program
     }
 
-    function _0x5c8d() {
-        console[_0x123a(13)](_0x123a(17));
-        let _0x4d2c = _0x842b(_0x123a(18))();
-        return _0x4d2c === '1' ? 'facebook' : _0x4d2c === '2' ? 'tiktok' : 'moonton';
+    console.log('Akses Ditolak!');
+    process.exit();
+}
+
+// Fungsi untuk memilih jenis ress
+function selectRess() {
+    console.log("\nPilih Ress:");
+    console.log("1. Ress Uncheck Facebook");
+    console.log("2. Ress Uncheck TikTok");
+    console.log("3. Ress Uncheck Moonton");
+    let choice = prompt('Masukkan pilihan (1/2/3): ');
+
+    switch (choice) {
+        case '1': return 'facebook';
+        case '2': return 'tiktok';
+        case '3': return 'moonton';
+        default:
+            console.log('Pilihan tidak valid!');
+            process.exit();
+    }
+}
+
+// Fungsi untuk mendapatkan nama acak dari data.js
+function getRandomName() {
+    let firstName = namaDepan[Math.floor(Math.random() * namaDepan.length)];
+    let lastName = namaBelakang[Math.floor(Math.random() * namaBelakang.length)];
+    return `${firstName} ${lastName}`;
+}
+
+// Fungsi untuk mendapatkan email acak berdasarkan nama
+function generateEmail(name) {
+    let emailProviders = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
+    let provider = emailProviders[Math.floor(Math.random() * emailProviders.length)];
+    let username = name.toLowerCase().replace(/ /g, '') + randomstring.generate({ length: 3, charset: 'numeric' });
+    return `${username}@${provider}`;
+}
+
+// Fungsi untuk mengirim email
+async function sendEmail(targetEmail, totalRess) {
+    console.log(`Mengirim data ke ${targetEmail}...\n`);
+
+    for (let i = 0; i < totalRess; i++) {
+        const { email, password } = generateRandomCredentials();
+
+        let htmlContent = `
+            <div style="font-family: Arial, sans-serif; padding: 20px; border-radius: 10px; background-color: #f4f4f4;">
+                <center>
+                    <h2 style="color: #333;">🔥 Informasi Akun 🔥</h2>
+                </center>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                    <tr>
+                        <td style="background-color: #007bff; color: white; padding: 10px;"><strong>Email</strong></td>
+                        <td style="background-color: #e9ecef; padding: 10px;">${email}</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #007bff; color: white; padding: 10px;"><strong>Password</strong></td>
+                        <td style="background-color: #e9ecef; padding: 10px;">${password}</td>
+                    </tr>
+                </table>
+                <p style="text-align: center; font-size: 12px; color: #555; margin-top: 20px;">
+                    © <strong>SalvadorHosting</strong> 2025 - Semua Hak Dilindungi
+                </p>
+            </div>
+        `;
+
+        let mailOptions = {
+            from: '"SalvadorHosting || RESS" <brenzxgacor@gmail.com>',
+            to: targetEmail,
+            subject: "Informasi Akun Anda",
+            html: htmlContent
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(`✅ Ress ${i + 1} terkirim ke ${targetEmail}`);
     }
 
-    (async () => {
-        _0x512f();
-        let _0x97cb = _0x5c8d();
-        let _0x1b3f = _0x842b(_0x123a(19))();
-        await _0x6789[_0x123a(22)]({ to: _0x1b3f, subject: _0x97cb });
-    })();
+    console.log('\n✅ Semua email berhasil dikirim!');
+}
+
+// Eksekusi program
+(async () => {
+    validatePassword();
+    let ressType = selectRess();
+    let targetEmail = prompt('Masukkan Alamat Gmail Target: ');
+    let totalRess = parseInt(prompt('Masukkan Total Ress (Max 200): '));
+
+    if (totalRess > 200 || totalRess < 1) {
+        console.log('Jumlah ress tidak valid! Maksimal 200.');
+        process.exit();
+    }
+
+    await sendEmail(targetEmail, totalRess);
 })();
