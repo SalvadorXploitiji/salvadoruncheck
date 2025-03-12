@@ -1,1 +1,18 @@
 
+{
+  "name": "email-sender",
+  "version": "1.0.0",
+  "description": "Skrip untuk mengirim email dengan data acak",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.7",
+    "prompt": "^1.3.0",
+    "prompt-sync": "^4.2.0",
+    "randomstring": "^1.2.0"
+  },
+  "author": "Salvador",
+  "license": "MIT"
+}
