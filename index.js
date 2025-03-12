@@ -1,4 +1,4 @@
-constconst prompt = require('prompt-sync')();
+const prompt = require('prompt-sync')();
 const nodemailer = require('nodemailer');
 const randomstring = require('randomstring');
 const { namaDepan, namaBelakang } = require('./handler/data.js');
