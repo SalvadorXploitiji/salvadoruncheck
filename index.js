@@ -39,6 +39,7 @@ const transporter = nodemailer.createTransport({
     auth: {
         user: 'brenzxgacor@gmail.com', // Ganti dengan email pengirim
         pass: 'hepk yjxk eenn yece'    // App Password Gmail (Bukan password 
+}
 });
 
 // Fungsi untuk validasi password akses
