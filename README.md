@@ -22,9 +22,9 @@ tiktok
 moonton
 ```
 
-join our channel on whatsapp
+## Buy original script with no enc or password acces
+https://t.me/joharisalmon
+https://wa.me/‪60166937310‬
+
+join our channel to
 https://whatsapp.com/channel/0029Vb0pAOWBlHpkInEvMQ1N
-<!---
-SalvadorXploitiji/SalvadorXploitiji is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
