@@ -14,6 +14,16 @@ npm install
 npm start
 ```
 
+## Running On Linux / ISH ( Alpine Linux )
+```sh
+apk add git
+apk add nodejs npm
+git clone https://github.com/SalvadorXploitiji/salvadoruncheck
+cd salvadoruncheck
+npm install
+npm start
+```
+
 
 ## Uncheck List
 ```sh
