@@ -9,7 +9,7 @@ git clone https://github.com/SalvadorXploitiji/salvadoruncheck
 cd salvadoruncheck
 npm install
 npm start
-
+```
 
 
 list uncheck
