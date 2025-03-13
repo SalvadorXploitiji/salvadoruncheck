@@ -7,6 +7,7 @@ git clone https://github.com/SalvadorXploitiji/SalvadorXploitiji.git
 cd SalvadorXploitiji
 npm install
 npm start
+```
 
 
 
