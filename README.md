@@ -1,5 +1,5 @@
 ## Preview
-[ TOOLS PREVIEW ] (https://github.com/SalvadorXploitiji/salvadoruncheck/blob/main/IMG_4747.jpeg)
+! [Tool Preview] (https://github.com/SalvadorXploitiji/salvadoruncheck/blob/main/IMG_4747.jpeg)
 
 
 ## Running On Termux
