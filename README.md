@@ -1,6 +1,5 @@
 ## Preview
-![Logo] (https://github.com/SalvadorXploitiji/salvadoruncheck/blob/main/IMG_4747.jpeg)
-
+![Logo](https://github.com/SalvadorXploitiji/salvadoruncheck/blob/main/IMG_4747.jpeg)
 
 ## Running On Termux
 ```sh
@@ -10,7 +9,6 @@ git clone https://github.com/SalvadorXploitiji/salvadoruncheck
 cd salvadoruncheck
 npm install
 npm start
-```
 
 
 
