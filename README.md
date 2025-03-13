@@ -1,3 +1,6 @@
+
+# Salvador Uncheck V1.00
+
 ## Preview Tools
 ![Logo](https://github.com/SalvadorXploitiji/salvadoruncheck/blob/main/IMG_4747.jpeg)
 
@@ -12,10 +15,12 @@ npm start
 ```
 
 
-list uncheck
+## Uncheck List
+```sh
 facebook
 tiktok
 moonton
+```
 
 join our channel on whatsapp
 https://whatsapp.com/channel/0029Vb0pAOWBlHpkInEvMQ1N
