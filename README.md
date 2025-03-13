@@ -1,8 +1,10 @@
 Uncheck auto ress by Salvador
 
 
-## installation
+## Running On Termux
 ```sh
+pkg install git -y
+pkg install nodejs -y
 git clone https://github.com/SalvadorXploitiji/SalvadorXploitiji.git
 cd SalvadorXploitiji
 npm install
