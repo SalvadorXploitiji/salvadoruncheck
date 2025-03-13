@@ -1,7 +1,12 @@
 Uncheck auto ress by Salvador
 
 
-command for run tools
+## installation
+git clone https://github.com/SalvadorXploitiji/SalvadorXploitiji.git
+cd SalvadorXploitiji
+npm install
+npm start
+
 
 
 list uncheck
