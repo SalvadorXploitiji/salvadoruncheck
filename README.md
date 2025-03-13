@@ -6,8 +6,8 @@
 ```sh
 pkg install git -y
 pkg install nodejs -y
-git clone https://github.com/SalvadorXploitiji/SalvadorXploitiji.git
-cd SalvadorXploitiji
+git clone https://github.com/SalvadorXploitiji/salvadoruncheck
+cd salvadoruncheck
 npm install
 npm start
 ```
