@@ -1,4 +1,5 @@
-Uncheck auto ress by Salvador
+## Preview
+[ TOOLS PREVIEW ] (https://k.top4top.io/p_3359tdsjd0.jpeg)
 
 
 ## Running On Termux
